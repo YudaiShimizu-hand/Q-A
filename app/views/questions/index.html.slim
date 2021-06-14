@@ -13,7 +13,7 @@ table.table.table-hover
   - @questions.each do |question|
    tr
     td 
-    td= question.title
+    td= link_to question.title, question
     td
 
 
