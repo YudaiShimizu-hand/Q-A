@@ -1,0 +1,13 @@
+h1 クエッション新規
+
+.nav.justify-content-end
+ = link_to '一覧', questions_path, class: 'nav-link'
+
+= form_with model: @question, local: true do |f|
+ .form-group
+  = f.label :title
+  = f.text_field :title, class: 'form-control', id: 'question_title'
+ .form-group
+  = f.label :body
+  = f.text_area :body, class: 'form-control', id: 'question_body'
+ = f.submit nil, class: 'btn btn-primary'
