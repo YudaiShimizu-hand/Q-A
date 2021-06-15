@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   def index
-    @questions = Question.all
+    @q = current_user.questions.ransack(params[:q])
+    @questions = @q.result(distinct: true)
   end
 
   def new
@@ -8,7 +9,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = Question.new(question_params.merge(user_id: current_user.id))
     if @question.save
      redirect_to @question, notice: "質問「#{@question.title}」を追加しました。"
     else
@@ -17,15 +18,15 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
   end
 
   def edit
-    @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
   end
 
   def update
-   @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
     if @question.update(question_params)
      redirect_to @question, notice: "質問「#{@question.title}」を更新しました。"
     else
@@ -34,9 +35,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    question = Question.find(params[:id])
-    question.destroy
-    redirect_to questions_url, notice: "質問「#{question.title}」を削除しました。"
+    @question = current_user.questions.find(params[:id])
+    @question.destroy
+    redirect_to questions_url, notice: "質問「#{@question.title}」を削除しました。"
   end
 
   private
@@ -44,4 +45,5 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body, :user_id)
   end
+
 end
