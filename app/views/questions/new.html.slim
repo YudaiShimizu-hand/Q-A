@@ -1,6 +1,5 @@
-h1 クエッション新規
+= render partial: 'head'
 
-.nav.justify-content-end
- = link_to '一覧', questions_path, class: 'nav-link'
+h1 クエッション新規
 
 = render partial: 'form', locals: {question: @question}
