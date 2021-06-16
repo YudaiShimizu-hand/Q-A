@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   def index
-    @q = current_user.questions.ransack(params[:q])
-    @questions = @q.result(distinct: true)
+    @q = Question.ransack(params[:q])
+    @questions = @q.result(distinct: true).page(params[:page]).per(4)
   end
 
   def new
@@ -18,15 +18,15 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = current_user.questions.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def edit
-    @question = current_user.questions.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def update
-    @question = current_user.questions.find(params[:id])
+    @question = Question.find(params[:id])
     if @question.update(question_params)
      redirect_to @question, notice: "質問「#{@question.title}」を更新しました。"
     else
@@ -35,9 +35,15 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question = current_user.questions.find(params[:id])
+    @question = Question.find(params[:id])
     @question.destroy
     redirect_to questions_url, notice: "質問「#{@question.title}」を削除しました。"
+  end
+
+  def unsolved
+  end
+
+  def solved
   end
 
   private

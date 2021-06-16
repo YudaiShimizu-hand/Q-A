@@ -1,6 +1,13 @@
 
 h1 質問一覧
 
+= search_form_for @q, url: admin_questions_path, class: 'mb-5' do |f|
+ .form-group.row
+  = f.label :title_cont, '名称', class: 'col-sm-2 col-form-label'
+   .col-sm-10
+    = f.search_field :title_cont, class: 'form-control'
+ .form-group
+  = f.submit class: 'btn btn-outline-primary'
 
 .md-3
 table.table.table-hover
@@ -10,3 +17,7 @@ table.table.table-hover
     td 
     td= question.title
     td= link_to '削除', question, method: :delete, data: { confirm: "質問「#{question.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+
+.md-3
+ = paginate @questions
+ = page_entries_info @questions

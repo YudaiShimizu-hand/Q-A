@@ -25,5 +25,10 @@ table.table.table-hover
     td 
     td= link_to question.title, question
     td
+   
+.md-3
+ = paginate @questions
+ = page_entries_info @questions
+
 
 

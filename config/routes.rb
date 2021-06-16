@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :questions 
+  resources :questions do
+    collection do
+      get :unsolved
+      get :solved
+    end
+  end
 
   root to: 'sessions#new'
 
