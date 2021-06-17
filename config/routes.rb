@@ -5,10 +5,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :questions do
-    collection do
-      get :unsolved
-      get :solved
-    end
+    resources :answers, only:[:create, :destroy]
   end
 
   root to: 'sessions#new'
