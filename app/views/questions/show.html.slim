@@ -22,7 +22,11 @@ table.table.table-hover
     tr 
       td 
       td= @question.user.name
-      td 
+      - if @question.solved?
+       td= '解決済み'
+      - else
+       - if @question.user_id == current_user.id
+         td= link_to '解決済みにする', solve_question_path(@question), method: :post
 
 h2 質問ホーム
 = form_with model: [@question, Answer.new] do |f|

@@ -1,6 +1,9 @@
 = render partial: 'head'
 
-h1 質問一覧
+. 
+ = link_to '全て', questions_path 
+ = link_to '未解決', unsolved_questions_path 
+ = link_to '解決', solved_questions_path
 
 = search_form_for @q, class: 'mb-5' do |f|
  .form-group.row
