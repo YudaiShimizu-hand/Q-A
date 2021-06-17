@@ -1,44 +1,45 @@
 = render partial: 'head'
 
-h1 クエスション詳細
+.container
+ h1 クエスション詳細
 
-.nav.justtify-end 
- = link_to '一覧', questions_path, class: 'nav-link'
+ .nav.justtify-end 
+  = link_to '一覧', questions_path, class: 'nav-link'
 
-table.table.table-hover
-  tbody
-    tr
-      td
-      td= @question.title
-      - if @question.user_id == current_user.id
+ table.table.table-hover
+   tbody
+     tr
        td
-        =link_to '編集', edit_question_path, class: 'btn btn-primary'
-        =link_to '削除', @question, method: :delete, data: { confirm: "質問「#{@question.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
-    tr
-      td
-      td= simple_format(h(@question.body), {}, sanitize: false, wrapper_tag: "div")
-      #複数行に渡る改行をする
-      td
-    tr 
-      td 
-      td= @question.user.name
-      - if @question.solved?
-       td= '解決済み'
-      - else
+       td= @question.title
        - if @question.user_id == current_user.id
-         td= link_to '解決済みにする', solve_question_path(@question), method: :post
+        td
+         =link_to '編集', edit_question_path, class: 'btn btn-primary'
+         =link_to '削除', @question, method: :delete, data: { confirm: "質問「#{@question.title}」を削除します。よろしいですか？" }, class: 'btn btn-danger'
+     tr
+       td
+       td= simple_format(h(@question.body), {}, sanitize: false, wrapper_tag: "div")
+       #複数行に渡る改行をする
+       td
+     tr 
+       td 
+       td= @question.user.name
+       - if @question.solved?
+        td= '解決済み'
+       - else
+        - if @question.user_id == current_user.id
+          td= link_to '解決済みにする', solve_question_path(@question), method: :post, class: 'btn btn-warning'
 
-h2 質問ホーム
-= form_with model: [@question, Answer.new] do |f|
- .form-group
-  = f.text_area :body, class: 'form-control', id: 'answer_body'
- = f.submit nil, class: 'btn btn-primary'
+ h2 質問ホーム
+ = form_with model: [@question, Answer.new] do |f|
+  .form-group
+   = f.text_area :body, class: 'form-control', id: 'answer_body'
+  = f.submit nil, class: 'btn btn-primary'
 
-h2 質問一覧
-ul 
- - @question.answers.each do |answer|
-  li
-    = answer.body
-    - if answer.user_id == current_user.id
-    = link_to "削除", question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger'
+ h2 質問一覧
+ ul 
+  - @question.answers.each do |answer|
+   li
+     = answer.body
+     - if answer.user_id == current_user.id
+     = link_to "削除", question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger'
 
