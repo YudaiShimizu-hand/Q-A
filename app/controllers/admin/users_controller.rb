@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_action :require_admin
   def index
     @q = User.ransack(params[:q])
     @users = @q.result(distinct: true).page(params[:page]).per(4)
@@ -45,5 +46,9 @@ class Admin::UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation, :image)
+  end
+
+  def require_admin
+    redirect_to root_url unless current_user.admin?
   end
 end

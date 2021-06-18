@@ -1,15 +1,16 @@
-h1 管理者ログイン
+.container
+ h1 管理者ログイン
 
-= form_with scope: session, local: true do |f|
- .form-group
-  = f.label :email, 'メールアドレス'
-  = f.text_field :email, class: 'form-control', id: 'session_email'
- .form-check 
-  = f.label :admin, class: 'form-check-label' do 
-   = f.check_box :admin, class: 'form-check-input'
-   | 管理者権限
- .form-group
-  = f.label :password, 'パスワード'
-  = f.password_field :password, class: 'form-control', id: 'session_password'
- = f.submit 'ログインする', class: 'btn btn-primary'
+ = form_with  url: admin_login_path, local: true do |f|
+  .form-group
+   = f.label :email, 'メールアドレス'
+   = f.text_field :email, class: 'form-control', id: 'session_email'
+  .form-check 
+   = f.label :admin, class: 'form-check-label' do 
+    = f.check_box :admin, class: 'form-check-input'
+    | 管理者権限
+  .form-group
+   = f.label :password, 'パスワード'
+   = f.password_field :password, class: 'form-control', id: 'session_password'
+  = f.submit 'ログインする', class: 'btn btn-primary'
 
